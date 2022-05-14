@@ -25,6 +25,7 @@ module.exports = {
   devServer: {
     static: './dist',
     hot: true,
+    historyApiFallback: true,
   },
   output: {
     filename: '[name].bundle.js',
@@ -88,6 +89,19 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
+            },
+          },
+        ],
+      }
       // https://vue-loader.vuejs.org/guide/pre-processors.html
       // this will apply to both plain `.scss` files
       // AND `<style lang="scss">` blocks in `.vue` files

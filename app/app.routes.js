@@ -17,5 +17,8 @@ angular.module('appModule')
         name: 'team-performance',
         url: '/team-performance',
         template: '<v-performance-page></v-performance-page>',
+      }).state('404client', {
+        url: '*path',
+        template: '<v-error-page></v-error-page>',
       });
   });
