@@ -34,6 +34,18 @@
   padding: 16px 8px;
   border: 1px solid #dcdee3;
   background-color: #e5e9f1;
+  text-align: center;
+  &__options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    &__feedback {
+      color: rgb(212, 79, 79);
+      font-size: 15px;
+      margin-top: 15px;
+    }
+  }
 }
 
 .c-chart__container {

@@ -1,6 +1,7 @@
 <template>
   <div class="c-chart__container">
-    <v-chart ref="chart" :option="chartOptions" />
+    <page-loader v-if="loading" />
+    <v-chart v-else ref="chart" :option="chartOptions" />
   </div>
 </template>
 
@@ -16,7 +17,8 @@ import {
   VisualMapComponent,
 } from "echarts/components";
 import VChart from "vue-echarts";
-
+import { mapGetters } from "vuex";
+import PageLoader from "../shared/page-loader.vue";
 use([
   CanvasRenderer,
   LineChart,
@@ -31,51 +33,17 @@ export default {
 
   components: {
     VChart,
+    PageLoader,
   },
-
-  data() {
-    return {
-      chartData: [
-        {
-          date_ms: 1641772800000,
-          performance: 0.2,
-        },
-        {
-          date_ms: 1641859200000,
-          performance: 0.33,
-        },
-        {
-          date_ms: 1641945600000,
-          performance: 0.53,
-        },
-        {
-          date_ms: 1642032000000,
-          performance: 0.31,
-        },
-        {
-          date_ms: 1642118400000,
-          performance: 0.65,
-        },
-        {
-          date_ms: 1642204800000,
-          performance: 0.88,
-        },
-        {
-          date_ms: 1642291200000,
-          performance: 0.07,
-        },
-      ],
-    };
+  created() {
+    this.$store.dispatch("performance/getCHartData");
   },
 
   computed: {
-    initOptions() {
-      return {
-        width: "auto",
-        height: "300px",
-      };
-    },
-
+    ...mapGetters({
+      loading: "getLoadingStatus",
+      chartData: "performance/getPerformanceData",
+    }),
     chartOptions() {
       return {
         title: {
@@ -83,7 +51,7 @@ export default {
           left: "center",
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           transitionDuration: 0,
           confine: false,
           hideDelay: 0,
@@ -135,7 +103,7 @@ export default {
     },
 
     yAxisData() {
-      return this.chartData.map((item) => +item.performance * 100);
+      return this.chartData.map((item) => Math.round(+item.performance * 100));
     },
   },
 
