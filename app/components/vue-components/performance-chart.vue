@@ -6,6 +6,14 @@
 </template>
 
 <script>
+/*
+  helper resources
+  1- https://stackoverflow.com/questions/63901955/echart-series-with-different-tooltip
+  2- https://stackoverflow.com/questions/67635823/line-color-change-based-on-logic-in-apache-echarts
+  3- https://echarts.apache.org/examples/en/editor.html?c=line-sections
+  4- https://echarts.apache.org/examples/en/editor.html?c=line-aqi&edit=1&reset=1
+*/
+
 import moment from "moment";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -47,7 +55,7 @@ export default {
     chartOptions() {
       return {
         title: {
-          text: "Team Performance Index",
+          text: "Team Performance Index:",
           left: "center",
         },
         tooltip: {
@@ -55,7 +63,20 @@ export default {
           transitionDuration: 0,
           confine: false,
           hideDelay: 0,
-          padding: 0,
+          padding: 10,
+          backgroundColor: "#172236",
+          borderColor: "#fff",
+          borderWidth: "1",
+          textStyle: {
+            color: "#fff",
+          },
+          formatter: (params) => {
+            // console.log(params);
+            return `
+                <div style="text-align:center; font-weight:bold;">${params[0].name}</div>
+                ${params[0].marker} ${params[0].seriesName} ${params[0].value}%
+                `;
+          },
         },
         grid: {
           left: "30px",
@@ -85,6 +106,8 @@ export default {
         },
         series: [
           {
+            name: "Team Performance Index:",
+            backgroundColor: "#000",
             data: this.yAxisData,
             type: "line",
             symbol: "circle",
@@ -95,6 +118,30 @@ export default {
             },
           },
         ],
+        visualMap: {
+          top: 50,
+          right: 10,
+          pieces: [
+            {
+              gt: 0,
+              lte: 50,
+              color: "#EE5F48",
+            },
+            {
+              gt: 50,
+              lte: 80,
+              color: "#F8D530",
+            },
+            {
+              gt: 80,
+              lte: 100,
+              color: "#178B48",
+            },
+          ],
+          outOfRange: {
+            color: "#ccc",
+          },
+        },
       };
     },
 
