@@ -1,12 +1,14 @@
 <div class="c-dashboard">
+  <v-page-loader ng-if="homePageVm.loading"></v-page-loader>
   <div class="c-filters__container">
-    [Place search component here]
+    <!-- <input type="text" placeholder="Search" ng-model="homePageVm.query"> -->
+    <v-employees-filter v-on-edit-query="homePageVm.setQuery"></v-employees-filter>
   </div>
 
-  <employees-list employees-list="homePageVm.employees"></employees-list>
+  <employees-list employees-list="homePageVm.employees" query="homePageVm.query"></employees-list>
 
   <div class="c-dashboard__footer">
-    <button class="c-button">
+    <button class="c-button" ng-click="homePageVm.loadMoreData()" ng-if="homePageVm.page < homePageVm.totalPages">
       Load More
     </button>
   </div>

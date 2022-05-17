@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="loading"
-    class="d-flex align-items-center justify-content-center page-loader"
-  >
+  <div class="d-flex align-items-center justify-content-center page-loader">
     <div class="page-loader__circle"></div>
   </div>
 </template>
