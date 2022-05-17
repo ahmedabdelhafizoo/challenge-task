@@ -17,15 +17,28 @@
 .c-dashboard {
   margin: 8px 16px;
 
-  .c-dashboard__header {
+  &__header {
     display: flex;
     justify-content: center;
   }
 
-  .c-dashboard__footer {
+  &__footer {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &__form {
+    &__input {
+      outline: none;
+      height: 40px;
+      border: 1px solid transparent;
+      padding: 10px 10px;
+      border-radius: 4px;
+      &:focus {
+        border-color: #0099ff;
+      }
+    }
   }
 }
 
